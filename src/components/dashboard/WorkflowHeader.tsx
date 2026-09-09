@@ -50,63 +50,63 @@ export const WorkflowHeader: React.FC<WorkflowHeaderProps> = ({
       tabKey: 'overview' as const,
       stepNumber: '00',
       title: 'OVERVIEW',
-      subtitle: 'Executive Risk Briefing',
+      subtitle: 'Municipal Risk Overview',
       icon: Layers,
     },
     {
       id: 'data',
       tabKey: 'data' as const,
       stepNumber: '01',
-      title: 'DATA EXPLORER',
-      subtitle: '200 Wards Telemetry',
+      title: 'DATA',
+      subtitle: 'Heat & Vulnerability Dataset',
       icon: Database,
     },
     {
       id: 'identify',
       tabKey: 'identify' as const,
       stepNumber: '02',
-      title: 'IDENTIFY RISK',
-      subtitle: 'Spatial Heat & Vulnerability Map',
+      title: 'IDENTIFY',
+      subtitle: 'Urban Heat Risk Map',
       icon: Crosshair,
     },
     {
       id: 'explain',
       tabKey: 'explain' as const,
       stepNumber: '03',
-      title: 'EXPLAIN WHY',
-      subtitle: 'Causal Drivers & Breakdown',
+      title: 'EXPLAIN',
+      subtitle: 'Causal Driver Breakdown',
       icon: Layers,
     },
     {
       id: 'recommend',
       tabKey: 'recommend' as const,
       stepNumber: '04',
-      title: 'RECOMMEND ACTIONS',
-      subtitle: 'Intervention Catalogue Rules',
+      title: 'RECOMMEND',
+      subtitle: 'Intervention Packages',
       icon: Sparkles,
     },
     {
       id: 'prioritize',
       tabKey: 'prioritize' as const,
       stepNumber: '05',
-      title: 'PRIORITIZE & FUND',
-      subtitle: 'Cost + Impact Optimization',
+      title: 'PRIORITIZE',
+      subtitle: 'Capital Allocation & Priority',
       icon: TrendingUp,
     },
     {
       id: 'planning',
       tabKey: 'planning' as const,
       stepNumber: '06',
-      title: 'WHAT-IF SANDBOX',
-      subtitle: 'Scenario Policy Modeling',
-      icon: Sparkles,
+      title: 'PLANNING',
+      subtitle: 'Intervention Planning & Review',
+      icon: Layers,
     },
     {
       id: 'reports',
       tabKey: 'reports' as const,
       stepNumber: '07',
-      title: 'DOCKETS & REPORTS',
-      subtitle: 'Export & Council Summaries',
+      title: 'REPORTS',
+      subtitle: 'Council Dockets & Reports',
       icon: CheckCircle2,
     },
   ];
@@ -152,7 +152,13 @@ export const WorkflowHeader: React.FC<WorkflowHeaderProps> = ({
               </span>
             </div>
 
-            {/* Offline Demo Dataset Indicator */}
+            {/* GEE Satellite Telemetry Badge */}
+            <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-[11px] font-mono">
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span>GEE: Landsat-9 TIRS (30m) & ECOSTRESS</span>
+            </div>
+
+            {/* Dataset Mode Indicator / Toggle */}
             <button
               type="button"
               onClick={() => onToggleMode && onToggleMode(dataSourceMode === 'demo' ? 'processed' : 'demo')}
@@ -160,7 +166,7 @@ export const WorkflowHeader: React.FC<WorkflowHeaderProps> = ({
               title="Click to toggle data source mode"
             >
               <Database className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>{provenanceSummary?.datasetLabel || 'Illustrative Demo Data'}</span>
+              <span>{provenanceSummary?.datasetLabel || (dataSourceMode === 'processed' ? '200 GCC Wards (GEE Ingested)' : '10 Calibrated Wards (Demo)')}</span>
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             </button>
           </div>

@@ -85,15 +85,15 @@ export const PriorityQueueCard: React.FC<PriorityQueueCardProps> = ({
       {/* Queue items (Styled like Recent Flights in reference) */}
       <div className="space-y-1.5 py-1.5 flex-1 flex flex-col justify-around">
         {rankedCandidates.map((item, idx) => {
-          const zId = item.zone.zoneId || item.zone.id || '';
-          const zName = item.zone.zoneName || item.zone.name || zId;
-          const isSelected = selectedZoneId === zId;
+          const zId = item.zone.wardId || item.zone.zoneId || item.zone.id || '';
+          const zName = item.zone.wardName || item.zone.zoneName || item.zone.name || zId;
+          const isSelected = selectedZoneId === zId || selectedZoneId === item.zone.zoneId;
           const score = item.score.totalScore ?? 0;
           const intervention = getInterventionName(score);
 
           return (
             <div
-              key={zId}
+              key={`${zId}-${idx}`}
               onClick={() => onSelectZone?.(zId)}
               className={`p-2 rounded-xl transition-all cursor-pointer flex items-center justify-between border ${
                 isSelected

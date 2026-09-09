@@ -1,27 +1,29 @@
 import { useState, useEffect, useMemo } from 'react';
 import type { Zone } from './types';
 import type { DataSourceMode, DataProvenanceSummary } from './data';
+import { type UserProfile, DEFAULT_USER_PROFILES } from './types/auth';
 import { respireApi } from './services';
 import { respireScoringEngine } from './core/scoring/scoringEngine';
 import {
   type WorkflowTab,
   OverviewView,
+  DataView,
   RiskMap,
   SelectedZonePanel,
   ExplainView,
   RecommendView,
   PrioritizeView,
-  ScenarioSandbox,
+  PlanningView,
+  ReportsView,
 } from './components/dashboard';
 import { LandingPage } from './components/landing';
+import { LoginPage } from './components/auth';
 import { Sidebar } from './components/layout/Sidebar';
 import { TopBar } from './components/layout/TopBar';
 import { Footer } from './components/layout/Footer';
 import { HelpGuideModal } from './components/modal/HelpGuideModal';
 import { HeatPlanModal } from './components/modal/HeatPlanModal';
 import { ChennaiZonesModal } from './components/modal/ChennaiZonesModal';
-import { exportZonesToCsv, copySummaryReport } from './utils/exportTelemetry';
-import { Download, Copy } from 'lucide-react';
 
 /**
  * Main application container for the RESPIRE Climate Resilience Decision Support Platform.
@@ -32,7 +34,18 @@ export function App() {
     if (saved === 'dark' || saved === 'light') return saved;
     return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
-  const [viewMode, setViewMode] = useState<'landing' | 'console'>('console');
+  const [viewMode, setViewMode] = useState<'landing' | 'login' | 'console'>('landing');
+  const [currentUser, setCurrentUser] = useState<UserProfile>(() => {
+    const saved = localStorage.getItem('respire_user_profile');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        // Fallback to default commissioner profile
+      }
+    }
+    return DEFAULT_USER_PROFILES[0];
+  });
   const [dataSourceMode, setDataSourceMode] = useState<DataSourceMode>('processed');
   const [zones, setZones] = useState<Zone[]>([]);
   const [selectedZoneId, setSelectedZoneId] = useState<string>('ward-045');
@@ -54,6 +67,11 @@ export function App() {
     }
     localStorage.setItem('respire_theme', theme);
   }, [theme]);
+
+  // Persist logged-in user profile
+  useEffect(() => {
+    localStorage.setItem('respire_user_profile', JSON.stringify(currentUser));
+  }, [currentUser]);
 
   const handleToggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
@@ -139,15 +157,40 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleLoginSuccess = (user: UserProfile) => {
+    setCurrentUser(user);
+    setViewMode('console');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleLogout = () => {
+    setViewMode('login');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <div className="min-h-screen bg-[#f8f9ff] dark:bg-[#0a0c13] text-slate-900 dark:text-slate-100 flex antialiased selection:bg-slate-800 selection:text-white relative transition-colors duration-200">
+    <div className={`min-h-screen w-full ${viewMode === 'console' ? 'flex bg-[#f8f9ff] dark:bg-[#0a0c13]' : 'flex flex-col bg-[#060814]'} text-slate-900 dark:text-slate-100 antialiased selection:bg-slate-800 selection:text-white relative transition-colors duration-200`}>
       {viewMode === 'landing' ? (
         <LandingPage
           onLaunchConsole={handleLaunchConsole}
+          onNavigateToLogin={() => {
+            setViewMode('login');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           onOpenHeatPlan={() => setShowHeatPlanModal(true)}
           onOpenZonesModal={() => setShowChennaiZonesModal(true)}
           onOpenHelp={() => setShowHelpModal(true)}
           zones={zones}
+        />
+      ) : viewMode === 'login' ? (
+        <LoginPage
+          onLoginSuccess={handleLoginSuccess}
+          onNavigateToLanding={() => {
+            setViewMode('landing');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          theme={theme}
+          onToggleTheme={handleToggleTheme}
         />
       ) : (
         <>
@@ -160,7 +203,15 @@ export function App() {
             onOpenHeatPlan={() => setShowHeatPlanModal(true)}
             onOpenHelp={() => setShowHelpModal(true)}
             onOpenZonesModal={() => setShowChennaiZonesModal(true)}
-            onNavigateToLanding={() => setViewMode('landing')}
+            onNavigateToLanding={() => {
+              setViewMode('landing');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigateToLogin={() => {
+              setViewMode('login');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            currentUser={currentUser}
           />
 
           {/* Main Command Viewport */}
@@ -177,7 +228,16 @@ export function App() {
               onSelectZone={setSelectedZoneId}
               searchQuery={searchQuery}
               onSearchChange={setSearchQuery}
-              onNavigateToLanding={() => setViewMode('landing')}
+              onNavigateToLanding={() => {
+                setViewMode('landing');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onNavigateToLogin={() => {
+                setViewMode('login');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onLogout={handleLogout}
+              currentUser={currentUser}
               theme={theme}
               onToggleTheme={handleToggleTheme}
             />
@@ -191,33 +251,45 @@ export function App() {
                   onSelectZone={setSelectedZoneId}
                   onNavigateToTab={setActiveWorkflowTab}
                 />
+              ) : activeWorkflowTab === 'data' ? (
+                /* STAGE 01: HEAT & VULNERABILITY DATASET */
+                <DataView
+                  scoredZones={scoredZones}
+                  onSelectZone={setSelectedZoneId}
+                  onNavigateToIdentify={(zId) => {
+                    if (zId) setSelectedZoneId(zId);
+                    setActiveWorkflowTab('identify');
+                  }}
+                />
               ) : activeWorkflowTab === 'identify' ? (
-                /* STAGE 02: IDENTIFY HEAT RISK AREAS (Mockup 1) */
+                /* STAGE 02: IDENTIFY HEAT RISK (URBAN HEAT RISK MAP) */
                 <div className="flex flex-col w-full space-y-5">
                   {/* Page Header & Strategic Meta */}
                   <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3">
                     <div>
-                      <div className="flex items-center gap-2 text-xs font-mono text-slate-500 uppercase tracking-wider mb-1">
-                        <span className="w-2 h-2 rounded-full bg-emerald-600" />
-                        <span>Stage 02 • Geospatial Triage</span>
+                      <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+                        <span className="w-2 h-2 rounded-full bg-blue-500" />
+                        <span className="font-bold text-slate-900 dark:text-white">STAGE 02</span>
+                        <span className="text-slate-300 dark:text-slate-600">/</span>
+                        <span>URBAN HEAT RISK MAP</span>
                       </div>
-                      <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
-                        Identify Heat Risk Areas
+                      <h1 className="text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+                        Where is the Heat Risk?
                       </h1>
-                      <p className="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
-                        Spatial triage across Greater Chennai Corporation wards derived from high-resolution thermal infrared satellite passovers, canopy deficit indices, and vulnerability weighting.
+                      <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-3xl leading-relaxed">
+                        Spatial triage across Greater Chennai Corporation wards derived from satellite thermal observations, canopy deficit indices, and vulnerability weighting.
                       </p>
                     </div>
 
-                    {/* Quick Operational Indicator */}
-                    <div className="flex items-center gap-2.5 bg-white border border-slate-200 px-3.5 py-2 rounded-xl shadow-xs self-start lg:self-auto">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                    {/* Observational Provenance Indicator */}
+                    <div className="flex items-center gap-2.5 bg-white dark:bg-gradient-to-b dark:from-[#1b2130] dark:to-[#10131d] border border-slate-200 dark:border-slate-400/50 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_2px_6px_rgba(0,0,0,0.5)] px-3.5 py-2 rounded-xl shadow-2xs self-start lg:self-auto">
+                      <span className="w-2 h-2 rounded-full bg-blue-500" />
                       <div className="text-left">
                         <div className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
-                          Telemetry Synchronized
+                          Satellite Observations
                         </div>
-                        <div className="text-xs font-mono font-semibold text-slate-900">
-                          INSAT-3DR & Landsat-9 (14:30 IST)
+                        <div className="text-xs font-mono font-semibold text-slate-800 dark:text-slate-200">
+                          Landsat 8/9 & Sentinel-2 · Cloud/QA Filtered
                         </div>
                       </div>
                     </div>
@@ -273,145 +345,18 @@ export function App() {
                   selectedZoneId={selectedZoneId}
                   onSelectZone={setSelectedZoneId}
                 />
-              ) : activeWorkflowTab === 'data' ? (
-                /* STAGE 01: DATA EXPLORER */
-                <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200">
-                    <div>
-                      <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                        01 Municipal Geospatial & Telemetry Dataset
-                      </h2>
-                      <p className="text-xs text-slate-500 mt-0.5">
-                        Inspect normalized satellite metrics, census vulnerability indicators, and coverage provenance across all wards.
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => exportZonesToCsv(scoredZones)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>Export CSV</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => copySummaryReport(scoredZones)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0b1c30] hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition-colors cursor-pointer"
-                      >
-                        <Copy className="w-3.5 h-3.5" />
-                        <span>Copy Summary</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs">
-                        <thead className="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
-                          <tr>
-                            <th className="p-3">Ward ID</th>
-                            <th className="p-3">Name</th>
-                            <th className="p-3">Zone</th>
-                            <th className="p-3">Surface LST</th>
-                            <th className="p-3">NDVI</th>
-                            <th className="p-3">Social Vuln</th>
-                            <th className="p-3">Score / 100</th>
-                            <th className="p-3">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                          {scoredZones.slice(0, 20).map(({ zone, score: s }) => {
-                            const zId = zone.zoneId || zone.id || zone.wardId || '';
-                            const isInsufficient = s.totalScore === null;
-                            return (
-                              <tr key={zId} className="hover:bg-slate-50/80 transition-colors">
-                                <td className="p-3 font-mono font-semibold text-slate-800">{zId}</td>
-                                <td className="p-3 font-medium text-slate-900">{zone.wardName || zone.zoneName}</td>
-                                <td className="p-3 text-slate-500">{zone.zoneName}</td>
-                                <td className="p-3 font-mono text-slate-700">
-                                  {isInsufficient ? '—' : `${(zone.metrics?.heat?.lst?.value ?? 41).toFixed(1)}°C`}
-                                </td>
-                                <td className="p-3 font-mono text-slate-700">
-                                  {isInsufficient ? '—' : (zone.metrics?.vegetation?.ndvi?.value ?? 0.12).toFixed(2)}
-                                </td>
-                                <td className="p-3 font-mono text-slate-700">
-                                  {isInsufficient ? '—' : (zone.metrics?.vulnerability?.vulnerabilityScore?.value ?? 0.75).toFixed(2)}
-                                </td>
-                                <td className="p-3 font-mono font-bold text-rose-600">
-                                  {isInsufficient ? 'N/A' : `${s.totalScore?.toFixed(0)}/100`}
-                                </td>
-                                <td className="p-3">
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedZoneId(zId);
-                                      setActiveWorkflowTab('identify');
-                                    }}
-                                    className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[11px] font-semibold rounded cursor-pointer transition-colors"
-                                  >
-                                    View in Map
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
               ) : activeWorkflowTab === 'planning' ? (
-                /* STAGE 06: PLANNING & WHAT-IF SCENARIO SANDBOX */
-                <ScenarioSandbox
+                /* STAGE 06: INTERVENTION PLANNING & REVIEW */
+                <PlanningView
                   zones={zones}
                   scoredZones={scoredZones}
+                  selectedZoneId={selectedZoneId}
                   onSelectZone={setSelectedZoneId}
                   onNavigateToTab={setActiveWorkflowTab}
                 />
               ) : (
-                /* STAGE 07: REPORTS */
-                <div className="space-y-4">
-                  <div className="pb-2 border-b border-slate-200">
-                    <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                      07 Municipal Council Dockets & Telemetry Reports
-                    </h2>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Export decision summaries, audit logs, and capital investment proposals.
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-white border border-slate-200 p-6 rounded-xl shadow-xs space-y-3">
-                      <h3 className="text-sm font-bold text-slate-900">Full 200 Wards CSV Export</h3>
-                      <p className="text-xs text-slate-500">
-                        Complete raw telemetry containing LST, NDVI, social vulnerability indices, and calculated priority ranks.
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => exportZonesToCsv(scoredZones)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#0b1c30] text-white text-xs font-semibold rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        <span>Download CSV</span>
-                      </button>
-                    </div>
-                    <div className="bg-white border border-slate-200 p-6 rounded-xl shadow-xs space-y-3">
-                      <h3 className="text-sm font-bold text-slate-900">Executive Briefing Clipboard Summary</h3>
-                      <p className="text-xs text-slate-500">
-                        Copy formatted text summary for municipal planning dockets and council briefings.
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => copySummaryReport(scoredZones)}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-slate-100 text-slate-800 text-xs font-semibold rounded-lg hover:bg-slate-200 transition-colors cursor-pointer"
-                      >
-                        <Copy className="w-3.5 h-3.5" />
-                        <span>Copy to Clipboard</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                /* STAGE 07: REPORTS & DOCKETS */
+                <ReportsView scoredZones={scoredZones} />
               )}
             </main>
 

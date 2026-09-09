@@ -9,16 +9,16 @@ import React from 'react';
 export const RiskLegend: React.FC = () => {
   const bands = [
     {
-      label: 'VERY HIGH',
-      range: '75 – 100',
+      label: 'HIGH / SEVERE',
+      range: '75 – 100 pts (Red)',
       color: 'bg-rose-500',
       glow: 'shadow-rose-500/50',
       border: 'border-rose-400/50',
       badge: 'bg-rose-500/10 text-rose-300 border-rose-500/30',
     },
     {
-      label: 'HIGH',
-      range: '50 – 74.9',
+      label: 'MEDIUM HEAT',
+      range: '50 – 74.9 pts (Orange)',
       color: 'bg-orange-500',
       glow: 'shadow-orange-500/50',
       border: 'border-orange-400/50',
@@ -26,15 +26,15 @@ export const RiskLegend: React.FC = () => {
     },
     {
       label: 'MODERATE',
-      range: '25 – 49.9',
-      color: 'bg-amber-400',
-      glow: 'shadow-amber-400/50',
-      border: 'border-amber-300/50',
-      badge: 'bg-amber-500/10 text-amber-300 border-amber-500/30',
+      range: '25 – 49.9 pts (Blue)',
+      color: 'bg-blue-500',
+      glow: 'shadow-blue-500/50',
+      border: 'border-blue-400/50',
+      badge: 'bg-blue-500/10 text-blue-300 border-blue-500/30',
     },
     {
-      label: 'LOW',
-      range: '0 – 24.9',
+      label: 'NORMAL / COOL',
+      range: '0 – 24.9 pts (Green)',
       color: 'bg-emerald-500',
       glow: 'shadow-emerald-500/50',
       border: 'border-emerald-400/50',
@@ -42,7 +42,7 @@ export const RiskLegend: React.FC = () => {
     },
     {
       label: 'INSUFFICIENT',
-      range: 'Missing / Null',
+      range: 'Missing Telemetry',
       color: 'bg-slate-600',
       glow: 'shadow-slate-500/30',
       border: 'border-dashed border-slate-500',

@@ -11,6 +11,7 @@ import {
   Sparkles,
   Building2,
   Code2,
+  Lock,
 } from 'lucide-react';
 import type { Zone } from '../../types';
 import { respireScoringEngine } from '../../core/scoring/scoringEngine';
@@ -19,6 +20,7 @@ import type { WorkflowTab } from '../dashboard';
 
 interface LandingPageProps {
   onLaunchConsole: (targetTab?: WorkflowTab, zoneId?: string) => void;
+  onNavigateToLogin: () => void;
   onOpenHeatPlan: () => void;
   onOpenZonesModal: () => void;
   onOpenHelp: () => void;
@@ -30,6 +32,7 @@ interface LandingPageProps {
  */
 export const LandingPage: React.FC<LandingPageProps> = ({
   onLaunchConsole,
+  onNavigateToLogin,
   onOpenHeatPlan,
   onOpenZonesModal,
   onOpenHelp,
@@ -123,10 +126,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <button
               type="button"
               onClick={onOpenZonesModal}
-              className="hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs font-mono text-slate-300 transition-colors"
+              className="hidden lg:flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs font-mono text-slate-300 transition-colors"
             >
               <Building2 className="w-3.5 h-3.5 text-cyan-400" />
               <span>200 Wards</span>
+            </button>
+
+            {/* Officer Portal Login Button */}
+            <button
+              type="button"
+              onClick={onNavigateToLogin}
+              className="flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-bold transition-all cursor-pointer shadow-[0_0_12px_rgba(6,182,212,0.2)] hover:shadow-[0_0_18px_rgba(6,182,212,0.4)]"
+            >
+              <Lock className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Officer Portal</span>
             </button>
 
             <button
@@ -134,7 +147,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               onClick={() => onLaunchConsole()}
               className="flex items-center space-x-2 px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white text-xs font-bold shadow-[0_0_24px_rgba(6,182,212,0.4)] hover:shadow-[0_0_32px_rgba(6,182,212,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer border border-cyan-300/30"
             >
-              <span>Launch Command Deck</span>
+              <span>Command Deck</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -178,11 +191,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
               <button
                 type="button"
+                onClick={onNavigateToLogin}
+                className="px-5 py-3.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-semibold text-sm border border-cyan-400/40 hover:border-cyan-300 transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)]"
+              >
+                <Lock className="w-4 h-4 text-cyan-400" />
+                <span>GCC Officer Portal</span>
+              </button>
+
+              <button
+                type="button"
                 onClick={onOpenZonesModal}
                 className="px-5 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold text-sm border border-white/[0.1] hover:border-white/[0.2] transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md"
               >
                 <MapPin className="w-4 h-4 text-cyan-400" />
-                <span>Explore 200 Wards</span>
+                <span>200 Wards</span>
               </button>
 
               <button
@@ -226,7 +248,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
           {/* Right Column: High-Tech Glass Telemetry & Code Console */}
           <div className="lg:col-span-5">
-            <div className="aero-card border-white/[0.12] shadow-2xl p-0 overflow-hidden relative">
+            <div className="bg-[#0b1022]/90 backdrop-blur-2xl border border-white/[0.12] rounded-2xl shadow-2xl p-0 overflow-hidden relative">
               {/* Terminal Window Header */}
               <div className="bg-[#0b1022] px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
                 <div className="flex items-center space-x-2">
@@ -405,7 +427,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Pillar 1: IDENTIFY */}
           <div
             onClick={() => onLaunchConsole('identify')}
-            className="aero-card aero-card-hover p-5 flex flex-col justify-between cursor-pointer group border-white/[0.08] hover:border-cyan-500/40 transition-all"
+            className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-cyan-400/50 rounded-2xl p-6 flex flex-col justify-between cursor-pointer group shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_8px_30px_rgba(6,182,212,0.25)] transition-all hover:scale-[1.02]"
           >
             <div className="space-y-3">
               <div className="h-10 w-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
@@ -432,7 +454,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Pillar 2: EXPLAIN */}
           <div
             onClick={() => onLaunchConsole('explain')}
-            className="aero-card aero-card-hover p-5 flex flex-col justify-between cursor-pointer group border-white/[0.08] hover:border-blue-500/40 transition-all"
+            className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-blue-400/50 rounded-2xl p-6 flex flex-col justify-between cursor-pointer group shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_8px_30px_rgba(59,130,246,0.25)] transition-all hover:scale-[1.02]"
           >
             <div className="space-y-3">
               <div className="h-10 w-10 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
@@ -459,7 +481,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Pillar 3: RECOMMEND */}
           <div
             onClick={() => onLaunchConsole('recommend')}
-            className="aero-card aero-card-hover p-5 flex flex-col justify-between cursor-pointer group border-white/[0.08] hover:border-indigo-500/40 transition-all"
+            className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-indigo-400/50 rounded-2xl p-6 flex flex-col justify-between cursor-pointer group shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_8px_30px_rgba(99,102,241,0.25)] transition-all hover:scale-[1.02]"
           >
             <div className="space-y-3">
               <div className="h-10 w-10 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
@@ -486,7 +508,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Pillar 4: PRIORITIZE */}
           <div
             onClick={() => onLaunchConsole('prioritize')}
-            className="aero-card aero-card-hover p-5 flex flex-col justify-between cursor-pointer group border-white/[0.08] hover:border-emerald-500/40 transition-all"
+            className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-emerald-400/50 rounded-2xl p-6 flex flex-col justify-between cursor-pointer group shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.25)] transition-all hover:scale-[1.02]"
           >
             <div className="space-y-3">
               <div className="h-10 w-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
@@ -547,7 +569,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
 
         {/* Live Spotlight Card */}
-        <div className="aero-card p-6 sm:p-8 border-white/[0.12] shadow-2xl">
+        <div className="bg-[#0a0e22]/90 backdrop-blur-2xl border border-white/[0.12] rounded-3xl p-6 sm:p-8 shadow-[0_8px_40px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1)]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             {/* Left Ward Overview (5 cols) */}
             <div className="lg:col-span-5 space-y-4 border-b lg:border-b-0 lg:border-r border-white/[0.08] pb-6 lg:pb-0 lg:pr-6">
@@ -699,7 +721,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="aero-card p-6 border-white/[0.08] space-y-3">
+          <div className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-cyan-400/40 rounded-2xl p-6 space-y-3 shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all">
             <div className="h-10 w-10 rounded-xl bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
               <Database className="w-5 h-5" />
             </div>
@@ -709,7 +731,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
 
-          <div className="aero-card p-6 border-white/[0.08] space-y-3">
+          <div className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-emerald-400/40 rounded-2xl p-6 space-y-3 shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all">
             <div className="h-10 w-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
               <Code2 className="w-5 h-5" />
             </div>
@@ -719,7 +741,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
 
-          <div className="aero-card p-6 border-white/[0.08] space-y-3">
+          <div className="bg-[#0b1024]/85 hover:bg-[#101738]/95 backdrop-blur-xl border border-white/[0.1] hover:border-amber-400/40 rounded-2xl p-6 space-y-3 shadow-[0_4px_20px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)] transition-all">
             <div className="h-10 w-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
               <ShieldCheck className="w-5 h-5" />
             </div>
@@ -753,6 +775,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               >
                 <span>Enter Command Console</span>
                 <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={onNavigateToLogin}
+                className="px-6 py-4 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-bold text-sm border border-cyan-400/40 transition-all cursor-pointer backdrop-blur-md flex items-center space-x-2"
+              >
+                <Lock className="w-4 h-4 text-cyan-400" />
+                <span>GCC Officer Sign In</span>
               </button>
 
               <button
@@ -794,6 +825,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </button>
             <button type="button" onClick={() => onLaunchConsole('prioritize')} className="hover:text-cyan-400 transition-colors">
               Capital Queue
+            </button>
+            <button type="button" onClick={onNavigateToLogin} className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors flex items-center space-x-1">
+              <Lock className="w-3.5 h-3.5" />
+              <span>Officer Portal</span>
             </button>
             <button type="button" onClick={onOpenHelp} className="hover:text-cyan-400 transition-colors">
               Help & Guide

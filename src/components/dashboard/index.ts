@@ -1,6 +1,6 @@
 export * from './WorkflowHeader';
 export * from './OverviewView';
-export * from './ScenarioSandbox';
+export * from './DataView';
 export * from './RiskSummaryCards';
 export * from './RiskMap';
 export * from './RiskLegend';
@@ -11,6 +11,9 @@ export * from './RiskScoreCard';
 export * from './ExplainView';
 export * from './RecommendView';
 export * from './PrioritizeView';
+export * from './PlanningView';
+export * from './ReportsView';
+export * from './ScenarioSandbox';
 export * from './OverviewChartCard';
 export * from './WardClimateCard';
 export * from './CostSparklineCard';

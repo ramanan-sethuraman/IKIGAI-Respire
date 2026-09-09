@@ -5,3 +5,4 @@ export * from './zone';
 export * from './intervention';
 export * from './recommendation';
 export * from './prioritization';
+export * from './auth';

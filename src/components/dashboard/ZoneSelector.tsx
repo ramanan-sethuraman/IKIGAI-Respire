@@ -91,7 +91,7 @@ export const ZoneSelector: React.FC<ZoneSelectorProps> = ({
         {groupedZones.map(([groupName, groupWards]) => (
           <optgroup key={groupName} label={groupName} className="bg-slate-950 font-bold text-slate-400">
             {groupWards.map((zone) => {
-              const zId = zone.zoneId || zone.id || '';
+              const zId = zone.wardId || zone.zoneId || zone.id || '';
               return (
                 <option key={zId} value={zId} className="bg-slate-900 text-slate-200 font-normal">
                   {zone.wardName} {zone.areaKm2 ? `(${zone.areaKm2} km²)` : ''}
