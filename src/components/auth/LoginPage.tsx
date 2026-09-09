@@ -16,7 +16,6 @@ import {
   Radio,
   Sparkles,
   Database,
-  CheckCircle2,
 } from 'lucide-react';
 import {
   type UserProfile,
@@ -53,7 +52,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
     dbName: 'respire_climate_db',
     mode: 'OFFLINE_FALLBACK',
   });
-  const [persistedSuccess, setPersistedSuccess] = useState<boolean>(false);
 
   // Check MongoDB Atlas status on mount
   useEffect(() => {
@@ -120,7 +118,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       if (loginRes.user) {
         finalProfile = loginRes.user;
       }
-      setPersistedSuccess(loginRes.persistedToMongo);
     } catch (err) {
       console.warn('Auth service notice:', err);
     }
