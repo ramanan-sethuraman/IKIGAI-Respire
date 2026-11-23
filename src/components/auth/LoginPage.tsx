@@ -164,9 +164,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             className="flex items-center space-x-3 cursor-pointer group"
             title="Return to Public Portal"
           >
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 p-0.5 shadow-[0_0_20px_rgba(6,182,212,0.4)] group-hover:scale-105 transition-transform">
-              <div className="h-full w-full bg-[#080c1e] rounded-[10px] flex items-center justify-center overflow-hidden p-1">
-                <img src="/respire-emblem.png" alt="RESPIRE" className="w-full h-full object-contain" />
+            <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 p-0.5 shadow-[0_0_20px_rgba(6,182,212,0.4)] group-hover:scale-105 transition-transform">
+              <div className="h-full w-full bg-[#080c1e] rounded-full flex items-center justify-center overflow-hidden p-1">
+                <img src="/respire-emblem.png" alt="RESPIRE" className="w-full h-full object-contain rounded-full" />
               </div>
             </div>
             <div>

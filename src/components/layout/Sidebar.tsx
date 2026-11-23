@@ -65,8 +65,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className="px-6 py-5 flex items-center gap-3 cursor-pointer border-b border-slate-100 dark:border-[#272f42] hover:bg-slate-50 dark:hover:bg-[#171c2b] transition-colors"
           title="RESPIRE - Urban Heat & Climate Resilience (Click to view Landing Page)"
         >
-          <div className="h-9 w-9 rounded-lg bg-[#0b1c30] dark:bg-gradient-to-b dark:from-[#2a3248] dark:to-[#141824] p-1 flex items-center justify-center shrink-0 shadow-xs border border-transparent dark:border-slate-400/50 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
-            <img src="/respire-emblem.png" alt="RESPIRE" className="h-7 w-7 object-contain" />
+          <div className="h-9 w-9 rounded-full bg-[#0b1c30] dark:bg-gradient-to-b dark:from-[#2a3248] dark:to-[#141824] p-1 flex items-center justify-center shrink-0 shadow-xs border border-transparent dark:border-slate-400/50 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
+            <img src="/respire-emblem.png" alt="RESPIRE" className="h-7 w-7 object-contain rounded-full" />
           </div>
           <div>
             <div className="font-bold text-slate-900 dark:text-white uppercase tracking-wide text-sm flex items-center gap-1.5">
