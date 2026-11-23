@@ -8,7 +8,6 @@ import {
   ChevronRight,
   ArrowRight,
   Database,
-  Sparkles,
   Building2,
   Code2,
   Lock,
@@ -159,8 +158,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Left Column: Hero Typography & Call-To-Actions */}
           <div className="lg:col-span-7 space-y-6 text-left">
             {/* Tagline Badge */}
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
               <span>GREATER CHENNAI CORPORATION • CLIMATE DECISION SYSTEM 2026</span>
             </div>
 
