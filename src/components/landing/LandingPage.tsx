@@ -153,32 +153,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </header>
 
       {/* HERO SECTION */}
-      <section id="overview" className="relative pt-12 sm:pt-20 pb-16 px-4 sm:px-8 max-w-7xl mx-auto w-full text-center">
-        <div className="max-w-4xl mx-auto space-y-6">
+      <section id="overview" className="relative pt-12 sm:pt-20 pb-16 px-4 sm:px-8 max-w-7xl mx-auto w-full">
+        <div className="w-full space-y-8 text-left">
           {/* Tagline Badge */}
           <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
             <span>GREATER CHENNAI CORPORATION • CLIMATE DECISION SYSTEM 2026</span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
+          {/* Main Headline - Expands gracefully across the full width */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] max-w-6xl">
             Precision Urban Heat Intelligence &{' '}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">
               Targeted Municipal Action.
             </span>
           </h1>
 
-          {/* Subtitle Description */}
-          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto font-normal">
+          {/* Subtitle Description - Spans wide to utilize horizontal space */}
+          <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-5xl font-normal">
             Empowering Municipal Commissioners, Disaster Management Cells, and Climate Engineers to detect microclimate anomalies, unpack thermal vulnerability drivers across all 200 GCC wards, and optimize targeted cooling capital with mathematical rigor.
           </p>
 
           {/* Hero CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               type="button"
               onClick={() => onLaunchConsole('identify')}
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-bold text-sm shadow-[0_0_30px_rgba(6,182,212,0.45)] hover:shadow-[0_0_40px_rgba(6,182,212,0.7)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center space-x-2 cursor-pointer border border-cyan-300/30"
+              className="px-7 py-4 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-bold text-sm sm:text-base shadow-[0_0_30px_rgba(6,182,212,0.45)] hover:shadow-[0_0_40px_rgba(6,182,212,0.7)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center space-x-2.5 cursor-pointer border border-cyan-300/30"
             >
               <span>Launch Interactive Deck</span>
               <ChevronRight className="w-4 h-4" />
@@ -187,7 +187,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <button
               type="button"
               onClick={onNavigateToLogin}
-              className="px-5 py-3.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-semibold text-sm border border-cyan-400/40 hover:border-cyan-300 transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)]"
+              className="px-6 py-4 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-semibold text-sm sm:text-base border border-cyan-400/40 hover:border-cyan-300 transition-all flex items-center space-x-2.5 cursor-pointer backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)]"
             >
               <Lock className="w-4 h-4 text-cyan-400" />
               <span>GCC Officer Portal</span>
@@ -196,7 +196,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <button
               type="button"
               onClick={onOpenZonesModal}
-              className="px-5 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold text-sm border border-white/[0.1] hover:border-white/[0.2] transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md"
+              className="px-6 py-4 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold text-sm sm:text-base border border-white/[0.1] hover:border-white/[0.2] transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md"
             >
               <MapPin className="w-4 h-4 text-cyan-400" />
               <span>200 Wards</span>
@@ -205,37 +205,48 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <button
               type="button"
               onClick={onOpenHeatPlan}
-              className="px-4 py-3.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-semibold text-sm border border-amber-500/30 transition-all flex items-center space-x-1.5 cursor-pointer"
+              className="px-5 py-4 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-semibold text-sm sm:text-base border border-amber-500/30 transition-all flex items-center space-x-2 cursor-pointer"
             >
               <Sun className="w-4 h-4 text-amber-400" />
               <span>Heat Action Plan</span>
             </button>
           </div>
 
-          {/* Verified Operational Indicators */}
-          <div className="pt-6 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
-              <span className="text-3xl font-black font-mono text-cyan-400 block">
+          {/* Verified Operational Indicators - Full-width 3-column cards utilizing the entire screen width */}
+          <div className="pt-8 border-t border-white/[0.08] grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            <div className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all shadow-sm">
+              <span className="text-3xl sm:text-4xl font-black font-mono text-cyan-400 block tracking-tight">
                 200 Wards
               </span>
-              <span className="text-xs text-slate-400 font-medium mt-1 block">
+              <span className="text-sm font-semibold text-white mt-1.5 block">
                 GCC Microclimate Grid
               </span>
+              <span className="text-xs text-slate-400 mt-1 block leading-relaxed">
+                Continuous high-resolution thermal and spatial monitoring across all 15 administrative zones.
+              </span>
             </div>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
-              <span className="text-3xl font-black font-mono text-emerald-400 block">
+
+            <div className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all shadow-sm">
+              <span className="text-3xl sm:text-4xl font-black font-mono text-emerald-400 block tracking-tight">
                 -4.5°C
               </span>
-              <span className="text-xs text-slate-400 font-medium mt-1 block">
+              <span className="text-sm font-semibold text-white mt-1.5 block">
                 Cooling Hub Impact
               </span>
+              <span className="text-xs text-slate-400 mt-1 block leading-relaxed">
+                Targeted misting and shaded worker hydration stations achieving measurable ambient heat relief.
+              </span>
             </div>
-            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
-              <span className="text-3xl font-black font-mono text-indigo-400 block">
+
+            <div className="p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.08] transition-all shadow-sm">
+              <span className="text-3xl sm:text-4xl font-black font-mono text-indigo-400 block tracking-tight">
                 100%
               </span>
-              <span className="text-xs text-slate-400 font-medium mt-1 block">
+              <span className="text-sm font-semibold text-white mt-1.5 block">
                 Deterministic Logic
+              </span>
+              <span className="text-xs text-slate-400 mt-1 block leading-relaxed">
+                Objective 50/20/30 spatial multi-criteria formula ensuring transparent, reproducible capital allocation.
               </span>
             </div>
           </div>
