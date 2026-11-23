@@ -38,7 +38,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onOpenHelp,
   zones,
 }) => {
-  const [activeTab, setActiveTab] = useState<'telemetry' | 'scoring' | 'intervention'>('telemetry');
   const [selectedWardId, setSelectedWardId] = useState<string>('ward-045');
 
   // Interactive Ward Spotlight candidates
@@ -156,9 +155,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
       {/* HERO SECTION */}
       <section id="overview" className="relative pt-12 sm:pt-20 pb-16 px-4 sm:px-8 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column: Hero Typography & Call-To-Actions */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+        <div className="max-w-4xl space-y-6 text-left">
             {/* Tagline Badge */}
             <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
@@ -244,167 +241,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </span>
               </div>
             </div>
-          </div>
-
-          {/* Right Column: High-Tech Glass Telemetry & Code Console */}
-          <div className="lg:col-span-5">
-            <div className="bg-[#0b1022]/90 backdrop-blur-2xl border border-white/[0.12] rounded-2xl shadow-2xl p-0 overflow-hidden relative">
-              {/* Terminal Window Header */}
-              <div className="bg-[#0b1022] px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="text-[11px] font-mono text-slate-400 ml-2">
-                    respireEngine.ts
-                  </span>
-                </div>
-
-                {/* Console Tabs */}
-                <div className="flex items-center space-x-1 bg-black/40 p-0.5 rounded-lg border border-white/[0.06]">
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('telemetry')}
-                    className={`px-2 py-0.5 text-[10px] font-mono font-medium rounded ${
-                      activeTab === 'telemetry'
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                        : 'text-slate-400 hover:text-slate-200'
-                    }`}
-                  >
-                    Telemetry
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('scoring')}
-                    className={`px-2 py-0.5 text-[10px] font-mono font-medium rounded ${
-                      activeTab === 'scoring'
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                        : 'text-slate-400 hover:text-slate-200'
-                    }`}
-                  >
-                    Scoring
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('intervention')}
-                    className={`px-2 py-0.5 text-[10px] font-mono font-medium rounded ${
-                      activeTab === 'intervention'
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                        : 'text-slate-400 hover:text-slate-200'
-                    }`}
-                  >
-                    Interventions
-                  </button>
-                </div>
-              </div>
-
-              {/* Dynamic Console Body */}
-              <div className="p-5 font-mono text-xs space-y-3 bg-[#070b1a]/95">
-                {activeTab === 'telemetry' && (
-                  <div className="space-y-2 text-slate-300">
-                    <p className="text-cyan-400 font-bold">
-                      {'// Ward 045 (Vyasarpadi) Real-Time Telemetry Stream'}
-                    </p>
-                    <div className="p-2.5 rounded-lg bg-black/50 border border-white/[0.06] space-y-1 text-[11px]">
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Land Surface Temp (LST):</span>
-                        <span className="text-rose-400 font-bold">42.1°C (Severe)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Vegetation Deficit (NDVI):</span>
-                        <span className="text-amber-400 font-bold">0.12 (88% Deficit)</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Outdoor Worker Density:</span>
-                        <span className="text-orange-400 font-bold">87% High Vulnerability</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-slate-400">Data Completeness:</span>
-                        <span className="text-emerald-400 font-bold">100% Verified</span>
-                      </div>
-                    </div>
-
-                    <div className="pt-1 flex items-center justify-between text-[11px]">
-                      <span className="text-slate-400">Computed Multi-Criteria Risk:</span>
-                      <span className="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-bold border border-rose-500/40">
-                        88.0 / 100 [VERY_HIGH]
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {activeTab === 'scoring' && (
-                  <div className="space-y-2 text-slate-300">
-                    <p className="text-cyan-400 font-bold">
-                      {'// Additive Decision Decomposition (50/20/30 Model)'}
-                    </p>
-                    <div className="space-y-1.5 text-[11px]">
-                      <div className="flex items-center justify-between">
-                        <span>1. Heat Exposure (50% wt):</span>
-                        <span className="text-rose-400 font-bold">46.0 / 50 pts</span>
-                      </div>
-                      <div className="w-full bg-slate-800 rounded-full h-1.5">
-                        <div className="bg-rose-500 h-1.5 rounded-full w-[92%]" />
-                      </div>
-
-                      <div className="flex items-center justify-between pt-1">
-                        <span>2. Vegetation Deficit (20% wt):</span>
-                        <span className="text-amber-400 font-bold">16.0 / 20 pts</span>
-                      </div>
-                      <div className="w-full bg-slate-800 rounded-full h-1.5">
-                        <div className="bg-amber-500 h-1.5 rounded-full w-[80%]" />
-                      </div>
-
-                      <div className="flex items-center justify-between pt-1">
-                        <span>3. Social Vulnerability (30% wt):</span>
-                        <span className="text-orange-400 font-bold">26.0 / 30 pts</span>
-                      </div>
-                      <div className="w-full bg-slate-800 rounded-full h-1.5">
-                        <div className="bg-orange-500 h-1.5 rounded-full w-[87%]" />
-                      </div>
-                    </div>
-
-                    <p className="text-[10px] text-emerald-400 pt-1">
-                      ✓ Mathematical Sum: 46 + 16 + 26 = 88.0 pts (Zero Discrepancy)
-                    </p>
-                  </div>
-                )}
-
-                {activeTab === 'intervention' && (
-                  <div className="space-y-2 text-slate-300">
-                    <p className="text-cyan-400 font-bold">
-                      {'// Rule-Engine Prescribed Climate Action'}
-                    </p>
-                    <div className="p-2.5 rounded-lg bg-indigo-950/40 border border-indigo-500/30 space-y-1 text-[11px]">
-                      <div className="text-indigo-200 font-bold">
-                        Modular Outdoor Worker Hydration & Cooling Hub
-                      </div>
-                      <div className="text-slate-400 text-[10px]">
-                        Targeted for Vyasarpadi outdoor industrial workers & transit nodes.
-                      </div>
-                      <div className="flex items-center justify-between pt-1 border-t border-white/[0.06]">
-                        <span className="text-slate-400">Indicative Capital Cost:</span>
-                        <span className="text-cyan-300 font-bold">₹72,000 / site</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-slate-400">Microclimate Impact:</span>
-                        <span className="text-emerald-400 font-bold">-4.5°C Ambient Delta</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Console Footer Info */}
-              <div className="px-4 py-2 bg-[#090d20] border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <div className="flex items-center space-x-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                  <span className="text-emerald-400 font-bold">Live Sensor Feeds Active</span>
-                </div>
-                <span>Chennai Latency: 14ms</span>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
