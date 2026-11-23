@@ -153,198 +153,90 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </header>
 
       {/* HERO SECTION */}
-      <section id="overview" className="relative pt-12 sm:pt-20 pb-16 px-4 sm:px-8 max-w-7xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column: Hero Typography & Call-To-Actions */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Tagline Badge */}
-            <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
-              <span>GREATER CHENNAI CORPORATION • CLIMATE DECISION SYSTEM 2026</span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-              Precision Urban Heat Intelligence &{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">
-                Targeted Municipal Action.
-              </span>
-            </h1>
-
-            {/* Subtitle Description */}
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
-              Empowering Municipal Commissioners, Disaster Management Cells, and Climate Engineers to detect microclimate anomalies, unpack thermal vulnerability drivers across all 200 GCC wards, and optimize targeted cooling capital with mathematical rigor.
-            </p>
-
-            {/* Hero CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
-              <button
-                type="button"
-                onClick={() => onLaunchConsole('identify')}
-                className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-bold text-sm shadow-[0_0_30px_rgba(6,182,212,0.45)] hover:shadow-[0_0_40px_rgba(6,182,212,0.7)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center space-x-2 cursor-pointer border border-cyan-300/30"
-              >
-                <span>Launch Interactive Deck</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-
-              <button
-                type="button"
-                onClick={onNavigateToLogin}
-                className="px-5 py-3.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-semibold text-sm border border-cyan-400/40 hover:border-cyan-300 transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)]"
-              >
-                <Lock className="w-4 h-4 text-cyan-400" />
-                <span>GCC Officer Portal</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenZonesModal}
-                className="px-5 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold text-sm border border-white/[0.1] hover:border-white/[0.2] transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md"
-              >
-                <MapPin className="w-4 h-4 text-cyan-400" />
-                <span>200 Wards</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onOpenHeatPlan}
-                className="px-4 py-3.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-semibold text-sm border border-amber-500/30 transition-all flex items-center space-x-1.5 cursor-pointer"
-              >
-                <Sun className="w-4 h-4 text-amber-400" />
-                <span>Heat Action Plan</span>
-              </button>
-            </div>
-
-            {/* Verified Operational Indicators */}
-            <div className="pt-4 border-t border-white/[0.08] grid grid-cols-3 gap-3.5 text-left">
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <span className="text-2xl sm:text-3xl font-black font-mono text-cyan-400 block">
-                  200 Wards
-                </span>
-                <span className="text-[11px] text-slate-400 font-medium">
-                  GCC Microclimate Grid
-                </span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 block">
-                  -4.5°C
-                </span>
-                <span className="text-[11px] text-slate-400 font-medium">
-                  Cooling Hub Impact
-                </span>
-              </div>
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                <span className="text-2xl sm:text-3xl font-black font-mono text-indigo-400 block">
-                  100%
-                </span>
-                <span className="text-[11px] text-slate-400 font-medium">
-                  Deterministic Logic
-                </span>
-              </div>
-            </div>
+      <section id="overview" className="relative pt-12 sm:pt-20 pb-16 px-4 sm:px-8 max-w-7xl mx-auto w-full text-center">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Tagline Badge */}
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
+            <span>GREATER CHENNAI CORPORATION • CLIMATE DECISION SYSTEM 2026</span>
           </div>
 
-          {/* Right Column: Live GCC Spatial Heat & Decision Operations Deck */}
-          <div className="lg:col-span-5">
-            <div className="bg-[#0b1022]/95 backdrop-blur-2xl border border-cyan-500/20 hover:border-cyan-500/40 rounded-2xl shadow-[0_0_35px_rgba(0,0,0,0.6),0_0_20px_rgba(6,182,212,0.15)] p-5 space-y-4 transition-all">
-              {/* Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                <div className="flex items-center space-x-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                  </span>
-                  <span className="text-xs font-mono font-bold text-white tracking-wide uppercase">
-                    GCC Heat Operations Radar
-                  </span>
-                </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-bold">
-                  200 Wards Live
-                </span>
-              </div>
+          {/* Main Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15]">
+            Precision Urban Heat Intelligence &{' '}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300">
+              Targeted Municipal Action.
+            </span>
+          </h1>
 
-              {/* Real-time Sector Breakdown */}
-              <div className="space-y-2.5">
-                <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider flex justify-between">
-                  <span>Sector Heat Vulnerability</span>
-                  <span>Max LST</span>
-                </div>
+          {/* Subtitle Description */}
+          <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto font-normal">
+            Empowering Municipal Commissioners, Disaster Management Cells, and Climate Engineers to detect microclimate anomalies, unpack thermal vulnerability drivers across all 200 GCC wards, and optimize targeted cooling capital with mathematical rigor.
+          </p>
 
-                {/* North Chennai */}
-                <div className="p-2.5 rounded-xl bg-black/40 border border-rose-500/20 space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-rose-300">North Chennai (Zones I–V)</span>
-                    <span className="font-mono font-bold text-rose-400">42.1°C • 88.0 / 100</span>
-                  </div>
-                  <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-                    <div className="bg-gradient-to-r from-orange-500 to-rose-500 h-full rounded-full w-[88%]" />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-slate-400">
-                    <span>Critical hotspot: Vyasarpadi, Tondiarpet</span>
-                    <span className="text-rose-400 font-bold">Severe Risk</span>
-                  </div>
-                </div>
+          {/* Hero CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+            <button
+              type="button"
+              onClick={() => onLaunchConsole('identify')}
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white font-bold text-sm shadow-[0_0_30px_rgba(6,182,212,0.45)] hover:shadow-[0_0_40px_rgba(6,182,212,0.7)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center space-x-2 cursor-pointer border border-cyan-300/30"
+            >
+              <span>Launch Interactive Deck</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
 
-                {/* Central Chennai */}
-                <div className="p-2.5 rounded-xl bg-black/40 border border-amber-500/20 space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-amber-300">Central Chennai (Zones VI–X)</span>
-                    <span className="font-mono font-bold text-amber-400">38.4°C • 68.0 / 100</span>
-                  </div>
-                  <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-                    <div className="bg-gradient-to-r from-amber-500 to-orange-500 h-full rounded-full w-[68%]" />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-slate-400">
-                    <span>High density: T. Nagar, Anna Nagar</span>
-                    <span className="text-amber-400 font-bold">Elevated Risk</span>
-                  </div>
-                </div>
+            <button
+              type="button"
+              onClick={onNavigateToLogin}
+              className="px-5 py-3.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 font-semibold text-sm border border-cyan-400/40 hover:border-cyan-300 transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.25)]"
+            >
+              <Lock className="w-4 h-4 text-cyan-400" />
+              <span>GCC Officer Portal</span>
+            </button>
 
-                {/* South Chennai */}
-                <div className="p-2.5 rounded-xl bg-black/40 border border-cyan-500/20 space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-cyan-300">South Chennai (Zones XI–XV)</span>
-                    <span className="font-mono font-bold text-cyan-400">35.2°C • 46.0 / 100</span>
-                  </div>
-                  <div className="w-full bg-slate-800/80 rounded-full h-1.5 overflow-hidden">
-                    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-full w-[46%]" />
-                  </div>
-                  <div className="flex justify-between text-[10px] text-slate-400">
-                    <span>Coastal & residential: Adyar, Velachery</span>
-                    <span className="text-cyan-400 font-bold">Moderate Risk</span>
-                  </div>
-                </div>
-              </div>
+            <button
+              type="button"
+              onClick={onOpenZonesModal}
+              className="px-5 py-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold text-sm border border-white/[0.1] hover:border-white/[0.2] transition-all flex items-center space-x-2 cursor-pointer backdrop-blur-md"
+            >
+              <MapPin className="w-4 h-4 text-cyan-400" />
+              <span>200 Wards</span>
+            </button>
 
-              {/* Priority Action Highlight */}
-              <div className="p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 flex items-center justify-between">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block font-bold">
-                    Primary Prescribed Action
-                  </span>
-                  <span className="text-xs font-bold text-white block">
-                    Modular Worker Hydration & Cooling Hubs
-                  </span>
-                  <span className="text-[10px] text-slate-400">
-                    Est. Ambient Delta: <span className="text-emerald-400 font-bold">-4.5°C</span> • Target: Zone IV Hotspots
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => onLaunchConsole('identify')}
-                  className="px-3 py-1.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-bold font-mono shrink-0 shadow-md transition-all hover:scale-105 cursor-pointer"
-                >
-                  View Deck
-                </button>
-              </div>
+            <button
+              type="button"
+              onClick={onOpenHeatPlan}
+              className="px-4 py-3.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-semibold text-sm border border-amber-500/30 transition-all flex items-center space-x-1.5 cursor-pointer"
+            >
+              <Sun className="w-4 h-4 text-amber-400" />
+              <span>Heat Action Plan</span>
+            </button>
+          </div>
 
-              {/* Live Feeds Footer */}
-              <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <div className="flex items-center space-x-1.5">
-                  <Database className="w-3 h-3 text-cyan-400" />
-                  <span>MODIS • GEE • IMD Feeds</span>
-                </div>
-                <span className="text-emerald-400 font-semibold">Active GCC Telemetry</span>
-              </div>
+          {/* Verified Operational Indicators */}
+          <div className="pt-6 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
+              <span className="text-3xl font-black font-mono text-cyan-400 block">
+                200 Wards
+              </span>
+              <span className="text-xs text-slate-400 font-medium mt-1 block">
+                GCC Microclimate Grid
+              </span>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
+              <span className="text-3xl font-black font-mono text-emerald-400 block">
+                -4.5°C
+              </span>
+              <span className="text-xs text-slate-400 font-medium mt-1 block">
+                Cooling Hub Impact
+              </span>
+            </div>
+            <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
+              <span className="text-3xl font-black font-mono text-indigo-400 block">
+                100%
+              </span>
+              <span className="text-xs text-slate-400 font-medium mt-1 block">
+                Deterministic Logic
+              </span>
             </div>
           </div>
         </div>
